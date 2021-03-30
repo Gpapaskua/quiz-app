@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import { setCorrectAnswer, setQuizStarted, setQuiz, setWrongAnswers } from '../../redux/QuizReducer';
 import Quiz from '../quiz/Quiz';
 
 const QuizContainer = (props) => {
     useEffect(() => {
-        console.log(props.type)
         let categoryId = props.categoryId;
         if (categoryId === null) {
             categoryId = Math.floor(Math.random() * 20) + 10;
@@ -13,29 +13,27 @@ const QuizContainer = (props) => {
         fetch(`https://opentdb.com/api.php?amount=${props.questions}&category=${categoryId}&difficulty=${props.difficulty}&type=${props.type}`)
             .then(response => response.json())
             .then(quiz => {
-                console.log(quiz)
-                if (quiz.response_code === 0) {
-                    props.getQuiz(quiz.results);
-                    props.getQuizStarted()
-                }
+                if (props.isQuizStarted)
+                    if (quiz.response_code === 0) {
+                        props.getQuiz(quiz.results);
+                        props.getQuizStarted()
+                    }
             })
     }, []);
     let checkAnswer = (clickedAnswer, correctAnswer) => {
-        if (clickedAnswer === correctAnswer) {
-            props.getCorrectAnswers();
-        }
-        else {
-            props.getWrongAnswers();
-        }
+        clickedAnswer === correctAnswer ? props.getCorrectAnswers() : props.getWrongAnswers();
+    }
+    if (!props.isQuizStarted) {
+        return <Redirect to={"/"} />
     }
     return (
+
         <Quiz quiz={props.quiz} correctAnswers={props.correctAnswers}
             incorrectAnswers={props.incorrectAnswers} questions={props.questions}
             checkAnswer={checkAnswer} />
     )
 }
 const mapStateToProps = (state) => {
-    console.log(state.quizInfo.quizType)
     return ({
         categoryId: state.quizInfo.categoryId,
         difficulty: state.quizInfo.difficulty,
