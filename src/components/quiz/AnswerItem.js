@@ -1,29 +1,34 @@
 import React from 'react'
 import styled from 'styled-components'
-import { shuffle } from '../../helpers/shuffle';
+import { useAllAnswers } from '../contexts/useAllAnswers';
+import { AnswersBox } from './QuizStyles';
 
 const AnswerItem = (props) => {
-    let answers = [...props.answers];
-    answers.push(props.correctAnswer);
-    answers = shuffle(answers);
+    const {answers, correctAnswer} = props
+    const allAnswers = useAllAnswers(answers, correctAnswer)
     return (
 
-        answers.map((ans) => {
-            return <Answer disabled={props.isDisabled} onClick={props.onAnswerClick} value={ans}>{ans}</Answer>
+        <AnswersBox>
+            {
+            allAnswers.map((ans) => {
+            return <Answer onClick={props.onAnswerClick} value={ans}>
+                <span>{ans}</span></Answer>
         })
+    }
+        </AnswersBox>
 
     )
 }
 
-const Answer = styled.button`
+const Answer = styled.div`
     font-size: 1rem;
-    width: 40%;
-    margin: 1rem;
+    width: 60%;
     background: #85FFBD;
-    padding: 0.5rem;
-    border: none;
+    padding: 1rem 0;
     border-radius: 0.5rem;
-    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &:hover{
         cursor: pointer;
         background: #FFFB7D;

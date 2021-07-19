@@ -5,28 +5,30 @@ export const QuizPage = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-
 `
 
 export const QuizBox = styled.div`
-   -webkit-box-shadow: 0px 0px 9px 3px rgba(0,0,0,0.85); 
-    box-shadow: 0px 0px 9px 3px rgba(0,0,0,0.85);
-    background: #e6dada;
-    border-radius: 0.3rem;
-    height: 90vh;
+    background: #fff;
+    border-radius: 0.2rem;
+    min-height: 60vh;
     width: 50%;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     @media (max-width: 768px) {
     width: 90%;
   }
     
 `
 export const AnswersBox = styled.div`
+    width: 90%;
     display: flex;
-    height: 40vh;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    flex-direction: column;
     align-items: center;
-    margin: 5rem 0 0 0;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
     @media (max-width: 768px) {
     flex-direction: column;
     flex-wrap: nowrap;
@@ -36,9 +38,9 @@ export const AnswersBox = styled.div`
   }
 `
 
-export const Question = styled.h2`
+export const Question = styled.p`
     font-size: 1.2rem;
     font-weight: 500;
-    margin: 2rem 1rem 2rem 1.7rem;
+
     
 `

@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { unsetQuiz } from '../../redux/QuizReducer';
 import Results from '../results/Results';
 
 const ResultsContainer = (props) => {
