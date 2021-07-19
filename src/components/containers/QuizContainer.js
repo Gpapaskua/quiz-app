@@ -5,10 +5,12 @@ import { useQuizData } from '../contexts/useQuizData';
 import Quiz from '../quiz/Quiz';
 
 const QuizContainer = () => {
-    const {questionsCount, difficulty, categoryId} = useQuizCreator()
+    const {questionsCount, difficulty, categoryId,correctAnswers, incorrectAnswers, checkAnswer } = useQuizCreator()
     const quiz = useQuizData({questionsCount, difficulty, categoryId})
+    
     if(quiz){
-        return <Quiz quiz={quiz}/>
+        return <Quiz quiz={quiz} checkAnswer={checkAnswer}
+         correctAnswers={correctAnswers} incorrectAnswers={incorrectAnswers}/>
     }
     return (
         <Preloader />

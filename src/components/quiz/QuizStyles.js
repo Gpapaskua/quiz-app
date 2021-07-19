@@ -14,7 +14,6 @@ export const QuizBox = styled.div`
     width: 50%;
     display: flex; 
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     @media (max-width: 768px) {
     width: 90%;
@@ -39,8 +38,9 @@ export const AnswersBox = styled.div`
 `
 
 export const Question = styled.p`
+    width: 80%;
     font-size: 1.2rem;
     font-weight: 500;
-
+    margin-top: 3.5rem;
     
 `

@@ -6,7 +6,7 @@ export function useAllAnswers(answers, correctAnswer) {
     useEffect(() => {
         const ans = ([...answers, correctAnswer])
         setAllAnswers(shuffle(ans))
-    }, [])
+    }, [answers])
     
 
     return allAnswers

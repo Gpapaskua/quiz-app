@@ -11,7 +11,7 @@ const AnswerItem = (props) => {
         <AnswersBox>
             {
             allAnswers.map((ans) => {
-            return <Answer onClick={props.onAnswerClick} value={ans}>
+            return <Answer  onClick={(e) => props.onAnswerClick(e, ans, correctAnswer)} disabled={props.disable}>
                 <span>{ans}</span></Answer>
         })
     }
@@ -20,9 +20,10 @@ const AnswerItem = (props) => {
     )
 }
 
-const Answer = styled.div`
+const Answer = styled.button`
     font-size: 1rem;
-    width: 60%;
+    width: 90%;
+    border: none;
     background: #85FFBD;
     padding: 1rem 0;
     border-radius: 0.5rem;
