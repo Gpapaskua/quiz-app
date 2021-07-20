@@ -17,15 +17,17 @@ export const QuizContextProvider = ({children}) => {
     function checkAnswer(correctAnswer, clickedAnswer){
         if(correctAnswer === clickedAnswer){
             setCorrectAnswers(correctAnswers+1)
-            return true
         }
         else{
             setIncorrectAnswers(incorrectAnswers+1)
-            return false
         }
     }
+    function resetAnswers(){
+            setCorrectAnswers(0);
+            setIncorrectAnswers(0);
+    }
     return(
-        <QuizContext.Provider value={{questionsCount, difficulty, categoryId, correctAnswers, setCorrectAnswers,
+        <QuizContext.Provider value={{questionsCount, difficulty, categoryId, correctAnswers, resetAnswers, setCorrectAnswers,
             incorrectAnswers, setIncorrectAnswers, setQuestionsCount, setDifficulty, setCategoryId, checkAnswer}} >
             {children}
         </QuizContext.Provider>

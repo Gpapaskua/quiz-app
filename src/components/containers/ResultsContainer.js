@@ -1,31 +1,23 @@
-import React from 'react'
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
+import React, {useState} from 'react'
+import { useQuizCreator } from '../contexts/QuizCreatorContext';
 import Results from '../results/Results';
+import QuizContainer from '../containers/QuizContainer';
 
-const ResultsContainer = (props) => {
-    if (!props.isQuizStarted) {
-        return <Redirect to={"/"} />
+const ResultsContainer = ({quiz, correctAnswers, questionsCount}) => {
+    const [tryAgain, setTryAgain] = useState(false)
+    const {resetAnswers} = useQuizCreator()
+    const onTryAgain = () => {
+        resetAnswers()
+        setTryAgain(true)
     }
-
+    if(tryAgain){
+        return <QuizContainer currentQuiz={quiz}/>
+    }
     return (
-        <Results totalQuestions={props.totalQuestions} correctAnswers={props.correctAnswers}
-            wrongAnswers={props.wrongAnswers} clearQuiz={props.clearQuiz} />
+        <Results  correctAnswers={correctAnswers}
+        quiz={quiz}  questionsCount={questionsCount} onTryAgain={onTryAgain}/>
     )
 }
-const mapStateToProps = (state) => {
-    return {
-        correctAnswers: state.quiz.correctAnswers,
-        wrongAnswers: state.quiz.wrongAnswers,
-        totalQuestions: state.quizInfo.questions,
-        isQuizStarted: state.quiz.isQuizStarted
-    }
-}
-const mapDispachToProps = (dispatch) => {
-    return {
-        clearQuiz: () => { dispatch(unsetQuiz()) }
-    }
-}
 
 
-export default connect(mapStateToProps, mapDispachToProps)(ResultsContainer);
+export default ResultsContainer

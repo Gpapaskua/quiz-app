@@ -1,26 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
+import QuizContainer from '../containers/QuizContainer'
+import { useQuizCreator } from '../contexts/QuizCreatorContext'
+import { QuizButton } from '../quiz/QuizStyles'
 import { ResultsPage, ResultItems, ResultsBox, AnswerResults, NewQuiz, QuizHeader } from './ResultsStyles'
 
-const Results = (props) => {
+const Results = ({questionsCount, correctAnswers, onTryAgain}) => {
     return (
-        <ResultsPage>
             <ResultsBox>
                 <QuizHeader>Quiz finished!</QuizHeader>
                 <ResultItems>
                     <span>Total Questions</span>
-                    <span>{props.totalQuestions}</span>
+                    <span>{questionsCount}</span>
                 </ResultItems>
                 <ResultItems>
-                    <AnswerResults correctAnswer>Correct answers</AnswerResults>
-                    <AnswerResults correctAnswer>{props.correctAnswers}</AnswerResults>
+                    <AnswerResults correctAnswer>your score</AnswerResults>
+                    <AnswerResults correctAnswer>{correctAnswers}</AnswerResults>
                 </ResultItems>
-                <ResultItems>
-                    <AnswerResults>wrong answers</AnswerResults>
-                    <AnswerResults>{props.wrongAnswers}</AnswerResults>
-                </ResultItems>
-                <NewQuiz to='/' onClick={props.clearQuiz}>new quiz</NewQuiz>
+                <NewQuiz to='/'>New Quiz</NewQuiz>
+                <QuizButton onClick={onTryAgain}>Try again</QuizButton>
             </ResultsBox>
-        </ResultsPage>
     )
 }
 

@@ -3,12 +3,13 @@ import QuizContainer from './components/containers/QuizContainer';
 import QuizCreatorContainer from './components/containers/QuizCreatorContainer';
 import ResultsContainer from './components/containers/ResultsContainer';
 import { QuizContextProvider } from './components/contexts/QuizCreatorContext';
+import { AppContent } from './components/quiz/QuizStyles';
 
 
 
 const App = () => {
   return (
-    <div className="App">
+    <AppContent>
       <QuizContextProvider>    
           <Router>
         <Route exact render={() => <QuizCreatorContainer />} path={"/"} />
@@ -17,7 +18,7 @@ const App = () => {
       </Router>
       </QuizContextProvider>
 
-    </div>
+    </AppContent>
   );
 }
 

@@ -1,43 +1,38 @@
 import React from 'react'
+import {QuizButton} from '../quiz/QuizStyles'
+import { QuizForm, Heading, QuizSelect } from './QuizCreatorStyles'
 
-const QuizCreator = (props) => {
-    let handleQuestionsChange = (e) => {
-        props.changeQuestionsCount(e.target.value);
-    }
-    let handleSubmit = (e) => {
-        e.preventDefault();
-        props.quizStarted();
-
-    }
-    let changeCategory = (e) => {
-        props.changeCategoryId(e.target.value)
-    }
-    let changeDifficulty = (e) => {
-        props.changeDifficulty(e.target.value)
-    }
+const QuizCreator = ({questionsCount, difficulty, categoryId, setQuestionsCount, 
+    setDifficulty, setCategoryId, handleSubmit, categories}) => {
+    
     return (
-        <CreateQuizPage>
-            <QuizForm onSubmit={handleSubmit}>
+        <QuizForm>
                 <Heading>Choose Quiz</Heading>
                 <label>Choose questions count</label>
-                <NumberInput type="number" min={10} max={30}
-                    value={!props.question ? 10 : props.question} onChange={handleQuestionsChange} />
+                <QuizSelect onChange={(e) => setQuestionsCount(e.target.value) } value={questionsCount}>
+                    <option value={10}>10</option>
+                    <option value={15}>15</option>
+                    <option value={20}>20</option>
+                    <option value={25}>25</option>
+                    <option value={30}>30</option>
+                </QuizSelect>
                 <label>Choose category</label>
-                <QuizSelect onChange={changeCategory}>
-                    {props.categories.length === 0 ? <option value={"any category"}>any category</option>
-                        : props.categories.map(category => {
+                <QuizSelect onChange={(e) => setCategoryId(e.target.value)} defaultValue={categoryId}>
+                    {categories ? 
+                         categories.map(category => {
                             return <option key={category.id} value={category.id} >{category.name}</option>
-                        })}
+                        })
+                    :
+                    <option value={"any category"}>any category</option>}
                 </QuizSelect>
                 <label>Choose difficulty</label>
-                <QuizSelect onChange={changeDifficulty} value={props.difficulty}>
+                <QuizSelect onChange={(e) => setDifficulty(e.target.value)} value={difficulty}>
                     <option value={"easy"}>easy</option>
                     <option value={"medium"}>medium</option>
                     <option value={"hard"}>hard</option>
                 </QuizSelect>
-                <StartButton onClick={handleSubmit}>Start</StartButton>
+                <QuizButton onClick={handleSubmit}>Start</QuizButton>
             </QuizForm>
-        </CreateQuizPage >
     )
 }
 

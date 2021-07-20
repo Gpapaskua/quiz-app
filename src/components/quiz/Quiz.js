@@ -1,28 +1,45 @@
 import React, { useState } from 'react'
-import { QuizPage, QuizBox, AnswersBox, Question } from './QuizStyles'
+import { QuizPage, QuizBox, QuizItem, HomeLink, Question, CorrectAnswer, QuizInfo, QuizButton } from './QuizStyles'
 import AnswerItem from './AnswerItem';
-import { Link, Redirect } from 'react-router-dom'
+import ResultsContainer from '../containers/ResultsContainer';
 
-const Quiz = ({quiz, checkAnswer, correctAnswers, incorrectAnswers}) => {
+
+const Quiz = ({quiz, checkAnswer, correctAnswers, incorrectAnswers, questionsCount}) => {
     const [questionIndex, setQuestionIndex] = useState(0);
-    const [disable, setDisable] = useState(false)
+    const [disable, setDisable] = useState(true)
+    const [showResults, setShowResults] = useState(false)
     const onAnswerClick = (e, clickedAnswer, correctAnswer) => {
-        checkAnswer(e, clickedAnswer, correctAnswer)
-        setDisable(true)
-        setTimeout(() => {
-            setQuestionIndex(questionIndex+1)
-          }, 2000);
+        checkAnswer(clickedAnswer, correctAnswer)
+        setDisable(false)
     }
-   
+    const onNextQuestion = () => {
+        setQuestionIndex(questionIndex+1)
+        setDisable(true)
+    }
+    const  onShowResults = () => {
+        setShowResults(true)
+    }
+    if(showResults){
+        return <ResultsContainer questionsCount={questionsCount} correctAnswers={correctAnswers} quiz={quiz}/>
+    }
     return (
-        <QuizPage>
             <QuizBox>
-            <Link to='/'>Home</Link>
-                <Question>Q{questionIndex + 1}.{(quiz[questionIndex].question)}</Question>
+            <HomeLink to='/'>Home</HomeLink>
+            <QuizInfo>
+                <span>{questionIndex+1}/{questionsCount}</span>
+                <span><span>{correctAnswers}</span>/<span>{incorrectAnswers}</span></span>
+            </QuizInfo>
+            <CorrectAnswer show={!disable}>
+                <span>{quiz[questionIndex].correct_answer}</span>
+            </CorrectAnswer>
+            <QuizItem>
+                <Question>{(quiz[questionIndex].question)}</Question>
                     <AnswerItem answers={quiz[questionIndex].incorrect_answers} correctAnswer={quiz[questionIndex].correct_answer}
                      onAnswerClick={onAnswerClick} disable={disable}/>
+                     </QuizItem>
+                     {questionsCount == questionIndex+1 ?  <QuizButton disabled={disable} onClick={onShowResults}>Results</QuizButton> :
+                        <QuizButton disabled={disable} onClick={onNextQuestion}>Next</QuizButton>}
             </QuizBox>
-        </QuizPage >
 
     )
 }
